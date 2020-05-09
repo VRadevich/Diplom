@@ -1,0 +1,154 @@
+﻿<Window x:Name="winAutoMode" x:Class="ddddd.AutoMode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ddddd"
+        mc:Ignorable="d"
+        Title="Автоматический режим" Height="800" Width="1000" Background="#FF809988" ResizeMode="NoResize" Closing="winAutoMode_Closing">
+    <Canvas x:Name="canv" HorizontalAlignment="Stretch" Height="784" VerticalAlignment="Stretch" Width="1000" RenderTransformOrigin="0.5,0.5">
+        <Ellipse Height="700" Canvas.Left="260" Stroke="Black" Canvas.Top="40" Width="700" Fill="#FF4E85A4"/>
+        <Rectangle Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="65" Width="205" RadiusX="0" RadiusY="0"/>
+        <Rectangle Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="530" Width="555" RadiusX="0" RadiusY="0"/>
+        <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="455" Width="625" RadiusX="0" RadiusY="0"/>
+        <Rectangle Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="150" Width="485"/>
+        <Rectangle Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="230" Width="555"/>
+        <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="305" Width="625"/>
+        <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="380" Width="625"/>
+        <Rectangle Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="610" Width="485" RadiusX="0" RadiusY="0"/>
+        <Rectangle x:Name="bottom" Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="695" Width="205" RadiusX="0" RadiusY="0"/>
+        <Ellipse x:Name="v_0" Height="20" Canvas.Left="510" Canvas.Top="65" Width="20" Fill="#FFA43F3F" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
+        <Ellipse x:Name="v_1" Height="20" Canvas.Left="545" Canvas.Top="65" Width="20" Fill="#FFA43F3F" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
+        <Ellipse x:Name="v_2" Height="20" Canvas.Left="580" Canvas.Top="65" Width="20" Fill="#FFA43F3F" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
+        <Ellipse x:Name="v_3" Height="20" Canvas.Left="615" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_4" Height="20" Canvas.Left="650" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_5" Height="20" Canvas.Left="685" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
+        <Button x:Name="LoadConfiguration" Content="Загрузить конфигурацию" Height="50" Canvas.Left="25" Canvas.Top="25" Width="160" Click="LoadConfiguration_Click"/>
+        <Button x:Name="OpenAll" Content="Открыть все клапаны" Height="50" Canvas.Left="25" Canvas.Top="230" Width="160" Click="OpenAll_Click"/>
+        <Button x:Name="Start" Content="Запуск" Height="50" Canvas.Left="25" Canvas.Top="160" Width="160" Click="Start_Click"/>
+        <Ellipse x:Name="v_6" Height="20" Canvas.Left="370" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_8" Height="20" Canvas.Left="440" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_9" Height="20" Canvas.Left="475" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_10" Height="20" Canvas.Left="510" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_11" Height="20" Canvas.Left="545" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_12" Height="20" Canvas.Left="580" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_13" Height="20" Canvas.Left="615" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_14" Height="20" Canvas.Left="650" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_15" Height="20" Canvas.Left="685" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_7" Height="20" Canvas.Left="405" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_17" Height="20" Canvas.Left="755" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_18" Height="20" Canvas.Left="790" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_19" Height="20" Canvas.Left="825" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_20" Height="20" Canvas.Left="335" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_21" Height="20" Canvas.Left="370" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_22" Height="20" Canvas.Left="405" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_23" Height="20" Canvas.Left="440" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_24" Height="20" Canvas.Left="475" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_25" Height="20" Canvas.Left="510" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_26" Height="20" Canvas.Left="545" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_27" Height="20" Canvas.Left="580" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_16" Height="20" Canvas.Left="720" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_29" Height="20" Canvas.Left="650" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_28" Height="20" Canvas.Left="615" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_30" Height="20" Canvas.Left="685" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_31" Height="20" Canvas.Left="720" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_32" Height="20" Canvas.Left="755" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_33" Height="20" Canvas.Left="790" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_34" Height="20" Canvas.Left="825" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_35" Height="20" Canvas.Left="860" Canvas.Top="230" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_36" Height="20" Canvas.Left="300" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_37" Height="20" Canvas.Left="335" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_38" Height="20" Canvas.Left="370" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_39" Height="20" Canvas.Left="405" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_40" Height="20" Canvas.Left="440" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_41" Height="20" Canvas.Left="475" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_42" Height="20" Canvas.Left="510" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_43" Height="20" Canvas.Left="545" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_44" Height="20" Canvas.Left="580" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_45" Height="20" Canvas.Left="615" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_46" Height="20" Canvas.Left="650" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_47" Height="20" Canvas.Left="685" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_48" Height="20" Canvas.Left="720" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_49" Height="20" Canvas.Left="755" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_50" Height="20" Canvas.Left="790" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_51" Height="20" Canvas.Left="825" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_52" Height="20" Canvas.Left="860" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_53" Height="20" Canvas.Left="895" Canvas.Top="305" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_54" Height="20" Canvas.Left="300" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_55" Height="20" Canvas.Left="335" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_56" Height="20" Canvas.Left="370" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_57" Height="20" Canvas.Left="405" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_58" Height="20" Canvas.Left="440" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_59" Height="20" Canvas.Left="475" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_60" Height="20" Canvas.Left="510" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_61" Height="20" Canvas.Left="545" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_62" Height="20" Canvas.Left="580" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_63" Height="20" Canvas.Left="615" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_64" Height="20" Canvas.Left="650" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_65" Height="20" Canvas.Left="685" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_66" Height="20" Canvas.Left="720" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_67" Height="20" Canvas.Left="755" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_68" Height="20" Canvas.Left="790" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_69" Height="20" Canvas.Left="825" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_70" Height="20" Canvas.Left="860" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_71" Height="20" Canvas.Left="895" Canvas.Top="380" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_72" Height="20" Canvas.Left="300" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_73" Height="20" Canvas.Left="335" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_74" Height="20" Canvas.Left="370" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_75" Height="20" Canvas.Left="405" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_76" Height="20" Canvas.Left="440" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_77" Height="20" Canvas.Left="475" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_78" Height="20" Canvas.Left="510" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_79" Height="20" Canvas.Left="545" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_80" Height="20" Canvas.Left="580" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_81" Height="20" Canvas.Left="615" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_82" Height="20" Canvas.Left="650" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_83" Height="20" Canvas.Left="685" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_84" Height="20" Canvas.Left="720" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_85" Height="20" Canvas.Left="755" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_86" Height="20" Canvas.Left="790" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_87" Height="20" Canvas.Left="825" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_88" Height="20" Canvas.Left="860" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_89" Height="20" Canvas.Left="895" Canvas.Top="455" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_90" Height="20" Canvas.Left="335" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_91" Height="20" Canvas.Left="370" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_92" Height="20" Canvas.Left="405" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_93" Height="20" Canvas.Left="440" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_94" Height="20" Canvas.Left="475" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_95" Height="20" Canvas.Left="510" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_96" Height="20" Canvas.Left="545" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_97" Height="20" Canvas.Left="580" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Button x:Name="CloseAll" Content="Закрыть все клапаны" Height="50" Canvas.Left="25" Canvas.Top="300" Width="160" Click="CloseAll_Click"/>
+        <Ellipse x:Name="v_98" Height="20" Canvas.Left="615" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_99" Height="20" Canvas.Left="650" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_100" Height="20" Canvas.Left="685" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_101" Height="20" Canvas.Left="720" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_102" Height="20" Canvas.Left="755" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_103" Height="20" Canvas.Left="790" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_104" Height="20" Canvas.Left="825" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_105" Height="20" Canvas.Left="860" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_106" Height="20" Canvas.Left="370" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_107" Height="20" Canvas.Left="405" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_108" Height="20" Canvas.Left="440" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_109" Height="20" Canvas.Left="475" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_110" Height="20" Canvas.Left="510" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_111" Height="20" Canvas.Left="545" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_112" Height="20" Canvas.Left="580" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_113" Height="20" Canvas.Left="615" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_114" Height="20" Canvas.Left="650" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_115" Height="20" Canvas.Left="685" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_116" Height="20" Canvas.Left="720" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_117" Height="20" Canvas.Left="755" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_118" Height="20" Canvas.Left="790" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_119" Height="20" Canvas.Left="825" Canvas.Top="610" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_120" Height="20" Canvas.Left="510" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_121" Height="20" Canvas.Left="545" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_122" Height="20" Canvas.Left="580" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_123" Height="20" Canvas.Left="615" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_124" Height="20" Canvas.Left="650" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_125" Height="20" Canvas.Left="685" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
+        <TextBox x:Name="HoursTB" Height="50" Canvas.Left="25" Canvas.Top="90" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Часы работы"/>
+        <TextBox x:Name="MinutesTB" Height="50" Canvas.Left="80" Canvas.Top="90" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Минуты работы"/>
+        <TextBox x:Name="SecondsTB" Height="50" Canvas.Left="135" Canvas.Top="90" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Секунды работы"/>
+    </Canvas>
+</Window>
