@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ddddd"
         mc:Ignorable="d"
-        Title="TimeSet" Height="200" Width="300" ResizeMode="NoResize" Background="#FF809988"
+        Title="TimeSet" Height="230" Width="373" ResizeMode="NoResize" Background="#FF809988"
         WindowStartupLocation="CenterOwner" 
         ShowInTaskbar="False"
-        FocusManager.FocusedElement="{Binding ElementName=opentimeTextBox}">
-    <Canvas HorizontalAlignment="Left" Height="188" Margin="0,0,0,0" VerticalAlignment="Center" Width="300">
-        <TextBox x:Name="opentimeTextBox" Height="24" Canvas.Left="148" Canvas.Top="11" TextWrapping="NoWrap" Width="69" Background="#FFB2B2B2" MaxLines="1"/>
-        <Label Content="Длительность открытия:" Height="27" Canvas.Left="10" Canvas.Top="10" Width="137"/>
-        <Label Content="Длительность закрытия:" Height="27" Canvas.Left="10" Canvas.Top="40" Width="137"/>
-        <TextBox x:Name="closetimeTextBox" Height="24" Canvas.Left="148" Canvas.Top="42" TextWrapping="NoWrap" Width="69" Background="#FFB2B2B2" MaxLines="1"/>
-        <Button Name="cancelButton" IsCancel="True" Canvas.Left="234" Canvas.Top="150" Height="29" Width="56">Отмена</Button>
-        <Button Name="okButton" Canvas.Left="193" Canvas.Top="150" Height="29" Width="31" IsDefault="True" Click="okButton_Click">OK</Button>
-
+        FocusManager.FocusedElement="{Binding ElementName=opentimeTextBox}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Canvas x:Name="canvas" Height="206" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" Margin="1,0,0,0">
+        <Button Name="cancelButton" IsCancel="True" Canvas.Left="315" Canvas.Top="175" Height="29" Width="56">Отмена</Button>
+        <Button Name="okButton" Canvas.Left="272" Canvas.Top="175" Height="29" Width="31" IsDefault="True" Click="OkButton_Click">OK</Button>
+        <ScrollViewer Height="156">
+            <Canvas x:Name="timeSetCanvas" Height="118" Canvas.Top="6" Width="242" Canvas.Left="5">
+                <Button x:Name="Add" Content="Добавить" Height="31" Canvas.Left="80" Canvas.Top="90" Width="58" Click="Add_Click" RenderTransformOrigin="0.5,0.5"/>
+            </Canvas>
+        </ScrollViewer>
     </Canvas>
 </Window>

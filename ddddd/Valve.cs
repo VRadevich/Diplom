@@ -21,7 +21,7 @@ namespace ddddd
         public Valve()
         { }
     }
-
+    [Serializable]
     public partial class Time
     {
         public int Time_Opens;

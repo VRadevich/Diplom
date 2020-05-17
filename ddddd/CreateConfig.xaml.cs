@@ -31,6 +31,7 @@ namespace ddddd
         }
 
         List<Valve> valves = new List<Valve>();
+        List<Time> times = new List<Time>();
         readonly Ellipse[] v = new Ellipse[126];
 
 
@@ -40,7 +41,7 @@ namespace ddddd
             {
                 for (int j = 1; j <= 16; j++)
                 {
-                    valves.Add(new Valve() { Index = i, Ltrch = j, Time_close = 0, Time_open = 0 });
+                    valves.Add(new Valve() { Index = i, Ltrch = j });
                 }
             }
         }
@@ -49,9 +50,7 @@ namespace ddddd
         {
             for (int i = 0; i <= 125; i++)
             {
-                v[i].ToolTip = $"Время открытия:{valves[i].Time_open}\n" +
-                    $"Время закрытия:{valves[i].Time_close}\n" +
-                    $"LTR модуль:{valves[i].Index}_{valves[i].Ltrch}";
+                v[i].ToolTip = $"LTR модуль:{valves[i].Index}_{valves[i].Ltrch}";
             }
         }
 
@@ -239,9 +238,7 @@ namespace ddddd
                         Vnum = i;
                         break;
                     }
-
                 }
-
             }
             TimeSet timeSet = new TimeSet
             {
@@ -251,15 +248,26 @@ namespace ddddd
             Nullable<bool> result = timeSet.ShowDialog();
             if (result == true)
             {
-                valves[Vnum].Time_open = Int32.Parse(timeSet.opentimeTextBox.Text);
-                valves[Vnum].Time_close = Int32.Parse(timeSet.closetimeTextBox.Text);
-
+                for (int i = 0; i <= timeSet.TBsOpen.Count-1; i++) 
+                {
+                    times.Add(new Time
+                    { 
+                        Time_Opens = Int32.Parse(timeSet.TBsOpen[i].Text),
+                        Time_Closes = Int32.Parse(timeSet.TBsClose[i].Text),
+                        Amount = Int32.Parse(timeSet.TBsAmount[i].Text)
+                    });
+                }
             }
+            q.Text = $"{times[0].Time_Opens}";
+            valves[Vnum].Times = times;
+            times.Clear();
+            q1.Text = $"{valves[Vnum].Times[0].Time_Opens}";
             timeSet.Close();
+
             
-            v[Vnum].ToolTip = $"Время открытия:{valves[Vnum].Time_open}\n" +
-                $"Время закрытия:{valves[Vnum].Time_close}\n" +
-                $"LTR модуль:{valves[Vnum].Index}_{valves[Vnum].Ltrch}";
+            //v[Vnum].ToolTip = $"Время открытия:{valves[Vnum].Time_open}\n" +
+            //    $"Время закрытия:{valves[Vnum].Time_close}\n" +
+            //    $"LTR модуль:{valves[Vnum].Index}_{valves[Vnum].Ltrch}";
         }
     }
 }

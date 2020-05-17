@@ -7,14 +7,6 @@
         mc:Ignorable="d"
         Title="Создание конфигурации" Height="800" Width="1000" Background="#FF809988" ResizeMode="NoResize">
     <Canvas x:Name="canv" HorizontalAlignment="Stretch" Height="784" VerticalAlignment="Stretch" Width="1000" RenderTransformOrigin="0.5,0.5">
-        <Canvas.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform/>
-                <SkewTransform AngleX="-0.191"/>
-                <RotateTransform/>
-                <TranslateTransform X="-1.497"/>
-            </TransformGroup>
-        </Canvas.RenderTransform>
         <Ellipse Height="700" Canvas.Left="260" Stroke="Black" Canvas.Top="40" Width="700" Fill="#FF4E85A4"/>
         <Rectangle Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="65" Width="205" RadiusX="0" RadiusY="0"/>
         <Rectangle Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="530" Width="555" RadiusX="0" RadiusY="0"/>
@@ -156,5 +148,7 @@
         <Ellipse x:Name="v_124" Height="20" Canvas.Left="650" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_125" Height="20" Canvas.Left="685" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
         <Ellipse Height="0" Canvas.Left="1133" Stroke="Black" Canvas.Top="405" Width="9"/>
+        <TextBox x:Name="q" Canvas.Left="50" Canvas.Top="253" Text="TextBox" TextWrapping="Wrap" Width="120" Height="39"/>
+        <TextBox x:Name="q1" Canvas.Left="50" Canvas.Top="301" Text="TextBox" TextWrapping="Wrap" Width="120" Height="39"/>
     </Canvas>
 </Window>
