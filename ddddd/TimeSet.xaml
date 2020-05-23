@@ -11,7 +11,7 @@
         FocusManager.FocusedElement="{Binding ElementName=opentimeTextBox}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
     <Canvas x:Name="canvas" Height="206" ScrollViewer.CanContentScroll="True" RenderTransformOrigin="0.5,0.5" Margin="1,0,0,0">
         <Button Name="cancelButton" IsCancel="True" Canvas.Left="315" Canvas.Top="175" Height="29" Width="56">Отмена</Button>
-        <Button Name="okButton" Canvas.Left="272" Canvas.Top="175" Height="29" Width="31" IsDefault="True" Click="OkButton_Click">OK</Button>
+        <Button Name="okButton" Canvas.Left="272" Canvas.Top="175" Height="29" Width="31" Click="OkButton_Click">OK</Button>
         <ScrollViewer Height="156">
             <Canvas x:Name="timeSetCanvas" Height="118" Canvas.Top="6" Width="242" Canvas.Left="5">
                 <Button x:Name="Add" Content="Добавить" Height="31" Canvas.Left="80" Canvas.Top="90" Width="58" Click="Add_Click" RenderTransformOrigin="0.5,0.5"/>

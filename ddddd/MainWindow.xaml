@@ -5,11 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ddddd"
         mc:Ignorable="d"
-        Title="MainWindow" Height="223" Width="318" MinWidth="305" MinHeight="200" Background="#FF809988" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MaxWidth="318" MaxHeight="223" WindowStyle="SingleBorderWindow">
-    <Canvas Height="207" Margin="0,0,2,0">
-        <Button x:Name="CreateConfig" Content="Создание конфигурации" Height="50" Canvas.Left="15" Canvas.Top="10" Width="190" Click="CreateConfig_Click" />
-        <Button x:Name="AutoMode" Content="Работа в автоматическом режиме
-                " Height="50" Canvas.Left="15" Canvas.Top="75" Width="190" Click="AutoMode_Click"/>
-        <Button x:Name="ManualMode" Content="Работа в ручном режиме" Height="50" Canvas.Left="15" Canvas.Top="140" Width="190"/>
+        Title="MainWindow" Height="196" Width="211" MinWidth="305" MinHeight="200" Background="#FF809988" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" MaxWidth="318" MaxHeight="223" WindowStyle="SingleBorderWindow">
+    <Canvas Height="174" Margin="0,0,2,0">
+        <Button x:Name="CreateConfig" Content="Создание конфигурации" Height="50" Canvas.Left="15" Canvas.Top="20" Width="190" Click="CreateConfig_Click" />
+        <Button x:Name="AutoMode" Content="Окно управления клапанами" Height="50" Canvas.Left="15" Canvas.Top="99" Width="190" Click="AutoMode_Click"/>
     </Canvas>
 </Window>

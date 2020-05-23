@@ -23,9 +23,9 @@
         <Ellipse x:Name="v_3" Height="20" Canvas.Left="615" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_4" Height="20" Canvas.Left="650" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_5" Height="20" Canvas.Left="685" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
-        <Button x:Name="LoadConfiguration" Content="Загрузить конфигурацию" Height="50" Canvas.Left="25" Canvas.Top="25" Width="160" Click="LoadConfiguration_Click"/>
-        <Button x:Name="OpenAll" Content="Открыть все клапаны" Height="50" Canvas.Left="25" Canvas.Top="230" Width="160" Click="OpenAll_Click"/>
-        <Button x:Name="Start" Content="Запуск" Height="50" Canvas.Left="25" Canvas.Top="160" Width="160" Click="Start_Click"/>
+        <Button x:Name="LoadConfiguration" Content="Загрузить конфигурацию" Height="25" Canvas.Left="25" Canvas.Top="25" Width="160" Click="LoadConfiguration_Click"/>
+        <Button x:Name="OpenAll" Content="Открыть все клапаны" Height="25" Canvas.Left="25" Canvas.Top="120" Width="125" Click="OpenAll_Click"/>
+        <Button x:Name="Start" Content="Запуск" Height="25" Canvas.Left="200" Canvas.Top="25" Width="53" Click="Start_Click"/>
         <Ellipse x:Name="v_6" Height="20" Canvas.Left="370" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_8" Height="20" Canvas.Left="440" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_9" Height="20" Canvas.Left="475" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
@@ -118,7 +118,7 @@
         <Ellipse x:Name="v_95" Height="20" Canvas.Left="510" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_96" Height="20" Canvas.Left="545" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_97" Height="20" Canvas.Left="580" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
-        <Button x:Name="CloseAll" Content="Закрыть все клапаны" Height="50" Canvas.Left="25" Canvas.Top="300" Width="160" Click="CloseAll_Click"/>
+        <Button x:Name="CloseAll" Content="Закрыть все клапаны" Height="25" Canvas.Left="25" Canvas.Top="155" Width="125" Click="CloseAll_Click"/>
         <Ellipse x:Name="v_98" Height="20" Canvas.Left="615" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_99" Height="20" Canvas.Left="650" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_100" Height="20" Canvas.Left="685" Canvas.Top="530" Width="20" Fill="#FFA43F3F"/>
@@ -147,8 +147,13 @@
         <Ellipse x:Name="v_123" Height="20" Canvas.Left="615" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_124" Height="20" Canvas.Left="650" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_125" Height="20" Canvas.Left="685" Canvas.Top="695" Width="20" Fill="#FFA43F3F"/>
-        <TextBox x:Name="HoursTB" Height="50" Canvas.Left="25" Canvas.Top="90" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Часы работы"/>
-        <TextBox x:Name="MinutesTB" Height="50" Canvas.Left="80" Canvas.Top="90" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Минуты работы"/>
-        <TextBox x:Name="SecondsTB" Height="50" Canvas.Left="135" Canvas.Top="90" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Секунды работы"/>
+        <TextBox x:Name="HoursTB" Height="50" Canvas.Left="25" Canvas.Top="60" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Часы работы"/>
+        <TextBox x:Name="MinutesTB" Height="50" Canvas.Left="80" Canvas.Top="60" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Минуты работы"/>
+        <TextBox x:Name="SecondsTB" Height="50" Canvas.Left="135" Canvas.Top="60" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Секунды работы"/>
+        <TextBox x:Name="LogTB" Height="253" Canvas.Left="22" Canvas.Top="508" TextWrapping="Wrap" Width="219" FontSize="9" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
+        <Button x:Name="Open_with_step" Content="Открыть с шагом" Height="25" Canvas.Left="160" Canvas.Top="120" Width="98" Click="Open_with_step_Click"/>
+        <Button x:Name="Open_Right" Content="Открыть правую половину" Height="25" Canvas.Left="25" Canvas.Top="190" Width="151" Click="Open_Right_Click"/>
+        <Button x:Name="Open_Left" Content="Открыть левую половину" Height="25" Canvas.Left="25" Canvas.Top="225" Width="150" Click="Open_Left_Click"/>
+        <Button x:Name="SaveLog" Content="Сохранить лог" Height="25" Canvas.Left="25" Canvas.Top="466" Width="96" Click="SaveLog_Click"/>
     </Canvas>
 </Window>

@@ -34,42 +34,47 @@ namespace ddddd
 
         List<Valve> valves = new List<Valve>();
         readonly Ellipse[] v = new Ellipse[126];
-        readonly int[] count = new int[126];
+        int[] time_count = new int[126];
+        int[] amount_count = new int[126];
+        int[] j_count = new int[126];
         readonly DispatcherTimer timer = new DispatcherTimer();
 
         public void Count_Setup()
         {
             for (int i = 0; i <= 125; i++)
             {
-                count[i] = 0;       
-            }      
+                time_count[i] = 0;
+                amount_count[i] = 0;
+                j_count[i] = 0;
+            }
         }
         void InitializeTimer()
         {
-             timer.Interval = TimeSpan.FromSeconds(1);
-             timer.Tick += Timer_Tick;
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += Timer_Tick;
         }
 
         void Timer_Tick(object sender, EventArgs e)
-        {           
+        {
+
             if (int.Parse(SecondsTB.Text) > 0)
-              {
-                  SecondsTB.Text = $"{int.Parse(SecondsTB.Text) - 1}";
-              } 
+            {
+                SecondsTB.Text = $"{int.Parse(SecondsTB.Text) - 1}";
+            }
             else
             {
                 if (int.Parse(MinutesTB.Text) > 0)
                 {
-                      SecondsTB.Text = $"{59}";
-                      MinutesTB.Text = $"{int.Parse(MinutesTB.Text) - 1}";
+                    SecondsTB.Text = $"{59}";
+                    MinutesTB.Text = $"{int.Parse(MinutesTB.Text) - 1}";
                 }
                 else
                 {
                     if (int.Parse(HoursTB.Text) > 0)
                     {
-                          SecondsTB.Text = $"{59}";
-                          MinutesTB.Text = $"{59}";
-                         HoursTB.Text = $"{int.Parse(HoursTB.Text) - 1}";
+                        SecondsTB.Text = $"{59}";
+                        MinutesTB.Text = $"{59}";
+                        HoursTB.Text = $"{int.Parse(HoursTB.Text) - 1}";
                     }
                     else
                     {
@@ -78,38 +83,44 @@ namespace ddddd
                         {
                             ValveClosing(i);
                         }
-                            Enable();
+                        Enable();
                         return;
+
                     }
                 }
             }
-            /*for (int i = 0; i <= 125; i++)
+            for (int i = 0; i <= 125; i++)
             {
-                count[i]++;
+                time_count[i]++;
                 if (valves[i].IsOpened == false)
                 {
-                    if (count[i] == valves[i].Time_close)
+                    if (time_count[i] == valves[i].Times[j_count[i]].Time_Closes)
                     {
                         ValveOpening(i);
-                        count[i] = 0;
+                        time_count[i] = 0;
+                        amount_count[i]++;
+                        if (amount_count[i] == valves[i].Times[j_count[i]].Amount)
+                        {
+                            j_count[i]++;
+                        }
                     }
                 }
                 else
                 {
-                    if (count[i] == valves[i].Time_open)
+                    if (time_count[i] == valves[i].Times[j_count[i]].Time_Opens)
                     {
                         ValveClosing(i);
-                        count[i] = 0;
+                        time_count[i] = 0;
                     }
                 }
-            }*/
+            }
         }
-      
+
         public void DeclareValves()
         {
             for (int i = 1; i <= 8; i++)
             {
-                for(int j = 1; j <= 16; j++)
+                for (int j = 1; j <= 16; j++)
                 {
                     valves.Add(new Valve() { Index = i, Ltrch = j });
                 }
@@ -350,8 +361,10 @@ namespace ddddd
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            timer.Start();
-            Disable();
+            //timer.Start();
+            //Disable();
+            LogTB.Text += $"Программа начала работу со временем {int.Parse(HoursTB.Text)}:{int.Parse(MinutesTB.Text)}:{int.Parse(SecondsTB.Text)} \n";
+
         }
 
         private void CloseAll_Click(object sender, RoutedEventArgs e)
@@ -360,7 +373,7 @@ namespace ddddd
             {
                 ValveClosing(i);
             }
-            
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были закрыты все клапаны \n");
         }
 
         private void OpenAll_Click(object sender, RoutedEventArgs e)
@@ -369,11 +382,78 @@ namespace ddddd
             {
                 ValveOpening(i);
             }
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыты все клапаны \n");
         }
 
         private void winAutoMode_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            
+
+        }
+
+        private void Open_Right_Click(object sender, RoutedEventArgs e)
+        {
+            for(int i = 0; i <= 125; i++)
+            {
+                if (Canvas.GetLeft(v[i]) >= 615)
+                {
+                    ValveOpening(i);
+                }
+                else
+                {
+                    ValveClosing(i);
+                }
+            }
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыта правая половина \n");
+        }
+
+        private void Open_Left_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i <= 125; i++)
+            {
+                if (Canvas.GetLeft(v[i]) <= 580)
+                {
+                    ValveOpening(i);
+                }
+                else
+                {
+                    ValveClosing(i);
+                }
+            }
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыта правая половина \n");
+        }
+
+        private void Open_with_step_Click(object sender, RoutedEventArgs e)
+        {
+            int steps = 0;
+            StepSetup stepSetup = new StepSetup();
+            bool? result = stepSetup.ShowDialog();
+            if (result == true)
+            {
+                steps = Int32.Parse(stepSetup.StepTB.Text);
+                LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыты клапаны: ");
+                for (int i = 0; i <= 125; i += steps)
+                {
+                    ValveOpening(i);
+                    LogTB.Text += ($"");
+                }
+            }
+        }
+
+        private void SaveLog_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog fs = new SaveFileDialog
+            {
+                InitialDirectory = "c:\\",
+                Filter = "txt files (*.txt)|*.txt",
+                DefaultExt = "xml",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
+            Nullable<bool> result = fs.ShowDialog();
+            if (result == true)
+            {               
+                File.WriteAllText(fs.FileName,LogTB.Text);
+            }
         }
     }
 }

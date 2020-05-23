@@ -31,8 +31,10 @@ namespace ddddd
         }
 
         List<Valve> valves = new List<Valve>();
-        List<Time> times = new List<Time>();
+        List<List<Time>> lists = new List<List<Time>>();
+        Dictionary<int, List> timing = new Dictionary<int, List>();
         readonly Ellipse[] v = new Ellipse[126];
+
 
 
         public void DeclareValves()
@@ -42,6 +44,7 @@ namespace ddddd
                 for (int j = 1; j <= 16; j++)
                 {
                     valves.Add(new Valve() { Index = i, Ltrch = j });
+                    lists.Add(new List<Time> { });
                 }
             }
         }
@@ -190,7 +193,7 @@ namespace ddddd
             XmlSerializer formatter = new XmlSerializer(typeof(List<Valve>));
             SaveFileDialog fs = new SaveFileDialog
             {
-                InitialDirectory = "c:\\Users\\морозов",
+                InitialDirectory = "c:\\",
                 Filter = "XML Files (*.xml)|*.xml",
                 DefaultExt = "xml",
                 FilterIndex = 2,
@@ -202,8 +205,7 @@ namespace ddddd
                 FileStream FS = new FileStream(fs.FileName, FileMode.OpenOrCreate);
                 formatter.Serialize(FS, valves);
                 FS.Close();
-            }            
-
+            }
         }
 
         private void load_Click(object sender, RoutedEventArgs e)
@@ -211,7 +213,7 @@ namespace ddddd
             XmlSerializer formatter = new XmlSerializer(typeof(List<Valve>));
             OpenFileDialog fs = new OpenFileDialog
             {
-                InitialDirectory = "c:\\Users\\морозов",
+                InitialDirectory = "c:\\",
                 Filter = "XML Files (*.xml)|*.xml",
                 DefaultExt = "xml",
                 FilterIndex = 2,
@@ -222,52 +224,57 @@ namespace ddddd
             {
                 FileStream FS = new FileStream(fs.FileName, FileMode.OpenOrCreate);
                 valves = (List<Valve>)formatter.Deserialize(FS);
+                FS.Close();
             }
             ValvesToolTip();
         }
 
         private void Valve_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            int Vnum = 0;
-            for(int i = 0; i <= 125; i++)
+            SolidColorBrush yellow = new SolidColorBrush
             {
-                if((e.GetPosition(canv).X >= Canvas.GetLeft(v[i]))&&(e.GetPosition(canv).X <= Canvas.GetLeft(v[i])+20))
+                Color = Color.FromRgb(220, 215, 95)
+            };
+            SolidColorBrush red = new SolidColorBrush
+            {
+                Color = Color.FromRgb(211, 211, 211)
+            };
+            List<Time> times = new List<Time>();
+            int Vnum = 0;
+            for (int i = 0; i <= 125; i++)
+            {
+                if ((e.GetPosition(canv).X >= Canvas.GetLeft(v[i])) && (e.GetPosition(canv).X <= Canvas.GetLeft(v[i]) + 20))
                 {
-                    if((e.GetPosition(canv).Y >= Canvas.GetTop(v[i]))&&(e.GetPosition(canv).Y <= Canvas.GetTop(v[i])+20))
+                    if ((e.GetPosition(canv).Y >= Canvas.GetTop(v[i])) && (e.GetPosition(canv).Y <= Canvas.GetTop(v[i]) + 20))
                     {
                         Vnum = i;
                         break;
                     }
                 }
             }
+            v[Vnum].Fill = yellow;
             TimeSet timeSet = new TimeSet
             {
                 Owner = this,
-                Title = $"Клапан #{ Vnum+1 }"
+                Title = $"Клапан #{ Vnum + 1 }"
             };
-            Nullable<bool> result = timeSet.ShowDialog();
+            bool? result = timeSet.ShowDialog();          
             if (result == true)
             {
-                for (int i = 0; i <= timeSet.TBsOpen.Count-1; i++) 
+                for (int i = 0; i <= timeSet.TBsCount; i++)
                 {
-                    times.Add(new Time
-                    { 
+                    lists[Vnum].Add(new Time
+                    {
                         Time_Opens = Int32.Parse(timeSet.TBsOpen[i].Text),
                         Time_Closes = Int32.Parse(timeSet.TBsClose[i].Text),
                         Amount = Int32.Parse(timeSet.TBsAmount[i].Text)
                     });
                 }
             }
-            q.Text = $"{times[0].Time_Opens}";
-            valves[Vnum].Times = times;
-            times.Clear();
-            q1.Text = $"{valves[Vnum].Times[0].Time_Opens}";
             timeSet.Close();
+            valves[Vnum].Times = lists[Vnum];
+            v[Vnum].Fill = red;
 
-            
-            //v[Vnum].ToolTip = $"Время открытия:{valves[Vnum].Time_open}\n" +
-            //    $"Время закрытия:{valves[Vnum].Time_close}\n" +
-            //    $"LTR модуль:{valves[Vnum].Index}_{valves[Vnum].Ltrch}";
         }
     }
 }

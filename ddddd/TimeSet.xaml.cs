@@ -31,35 +31,37 @@ namespace ddddd
         public List<Label> lClose = new List<Label>();
         public List<Label> lAmount = new List<Label>();
 
+        public TimeSet(int qwe)
+        {
+            for (int i = 0; i>123; i++)
+            {
+
+            }
+        }
+
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-                for (int i = 0; i <= TBsCount; i++)
+            for (int i = 0; i <= TBsCount; i++)
+            {
+                if (i == TBsCount)
                 {
-                    if (i == TBsCount)
+                    if ((TBsClose[i].Text == "") || (TBsOpen[i].Text == ""))
                     {
-                        if ((TBsClose[i].Text == "") || (TBsOpen[i].Text == ""))
-                        {
-                            MessageBox.Show("Введите корректные  или полные данные");
-                        }
-                        else
-                        {
-                            this.DialogResult = true;
-                        }
-                    }
-                    else
-                    {
-                        if ((TBsClose[i].Text == "") || (TBsOpen[i].Text == "") || (TBsAmount[i].Text == ""))
-                        {
-                            MessageBox.Show("Введите корректные  или полные данные");
-                        }
-                        else
-                        {
-                            this.DialogResult = true;
-                        }
+                        MessageBox.Show("Введите корректные  или полные данные");
+                        return;
                     }
                 }
-            
-            
+                else
+                {
+                    if ((TBsClose[i].Text == "") || (TBsOpen[i].Text == "") || (TBsAmount[i].Text == ""))
+                    {
+                        MessageBox.Show("Введите корректные  или полные данные");
+                        return;
+                    }
+                }
+            }
+            this.DialogResult = true;
+            this.Hide();
         }
 
         public int PositioningY1 = 10;
@@ -125,13 +127,10 @@ namespace ddddd
 
             if (TBsAmount[TBsCount].Text != "")
             {
-                TBsAmount[TBsCount].BorderBrush = null;
                 if (TBsOpen[TBsCount].Text != "")
                 {
-                    TBsOpen[TBsCount].BorderBrush = null;
                     if (TBsClose[TBsCount].Text != "")
                     {
-                        TBsClose[TBsCount].BorderBrush = null;
                         TBsCount++;
                         timeSetCanvas.Height += 80;
                         TBsCreation();
