@@ -27,12 +27,12 @@ namespace ddddd
             InitializeComponent();
             DeclareValves();
             ImplementValves();
-            ValvesToolTip();
+            ValvesModuleToolTip();
+            ValvesRightClick();
         }
 
         List<Valve> valves = new List<Valve>();
         List<List<Time>> lists = new List<List<Time>>();
-        Dictionary<int, List> timing = new Dictionary<int, List>();
         readonly Ellipse[] v = new Ellipse[126];
 
 
@@ -49,11 +49,39 @@ namespace ddddd
             }
         }
 
-        public void ValvesToolTip()
+        public void ValvesModuleToolTip()
         {
             for (int i = 0; i <= 125; i++)
             {
-                v[i].ToolTip = $"LTR модуль:{valves[i].Index}_{valves[i].Ltrch}";
+                v[i].ToolTip = $"LTR модуль:{valves[i].Index}_{valves[i].Ltrch}\n";
+
+            }
+        }
+
+        public void ValvesTimeToolTip(int num)
+        {
+            v[num].ToolTip = "";
+            v[num].ToolTip = $"LTR модуль:{valves[num].Index}_{valves[num].Ltrch}\n";
+            if (valves[num].Times.Count > 1)
+            {
+                for (int i = 0; i <= valves[num].Times.Count - 1; i++)
+                {
+                    v[num].ToolTip += $"------------#{(i + 1)}\nВ.О.:{valves[num].Times[i].Time_Opens}сек\n" +
+                        $"В.З.:{valves[num].Times[i].Time_Closes}сек\nК.П.:{valves[num].Times[i].Amount}раз\n";
+                }
+            }
+            else
+            {
+                if (valves[num].Times.Count == 1)
+                {
+                    v[num].ToolTip += $"В.О.:{valves[num].Times[0].Time_Opens}сек\n" +
+                        $"В.З.:{valves[num].Times[0].Time_Closes}сек\nК.П.:{valves[num].Times[0].Amount}раз\n";
+                }
+                /*if (valves[num].Times.Count == 0)
+                {
+                    v[num].ToolTip += $"В.О.:\nВ.З.:\nК.П.:\n";
+                }
+                */
             }
         }
 
@@ -188,6 +216,14 @@ namespace ddddd
 
         }
 
+        private void ValvesRightClick()
+        {
+            for (int i = 0; i <= 125; i++)
+            {
+                v[i].MouseRightButtonDown += Valve_MouseRightButtonDown;
+            }
+        }
+
         public void Save_Click(object sender, RoutedEventArgs e)
         {
             XmlSerializer formatter = new XmlSerializer(typeof(List<Valve>));
@@ -202,6 +238,7 @@ namespace ddddd
             Nullable<bool> result = fs.ShowDialog();
             if (result == true)
             {
+                File.Delete(fs.FileName);
                 FileStream FS = new FileStream(fs.FileName, FileMode.OpenOrCreate);
                 formatter.Serialize(FS, valves);
                 FS.Close();
@@ -226,19 +263,40 @@ namespace ddddd
                 valves = (List<Valve>)formatter.Deserialize(FS);
                 FS.Close();
             }
-            ValvesToolTip();
+            ValvesModuleToolTip();
+        }
+
+        void PaintTo(string color, int num)
+        {
+            switch (color)
+            {
+                case "yellow":
+                    SolidColorBrush yellow = new SolidColorBrush
+                    {
+                        Color = Color.FromRgb(220, 215, 95)
+                    };
+                    v[num].Fill = yellow;
+                    break;
+                case "white":
+                    SolidColorBrush white = new SolidColorBrush
+                    {
+                        Color = Color.FromRgb(211, 211, 211)
+                    };
+                    v[num].Fill = white;
+                    break;
+                case "gray":
+                    SolidColorBrush gray = new SolidColorBrush
+                    {
+                        Color = Color.FromRgb(75, 75, 75)
+                    };
+                    v[num].Fill = gray;
+                    break;
+
+            }
         }
 
         private void Valve_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SolidColorBrush yellow = new SolidColorBrush
-            {
-                Color = Color.FromRgb(220, 215, 95)
-            };
-            SolidColorBrush red = new SolidColorBrush
-            {
-                Color = Color.FromRgb(211, 211, 211)
-            };
             List<Time> times = new List<Time>();
             int Vnum = 0;
             for (int i = 0; i <= 125; i++)
@@ -252,29 +310,125 @@ namespace ddddd
                     }
                 }
             }
-            v[Vnum].Fill = yellow;
+            PaintTo("yellow", Vnum);
             TimeSet timeSet = new TimeSet
             {
                 Owner = this,
                 Title = $"Клапан #{ Vnum + 1 }"
             };
-            bool? result = timeSet.ShowDialog();          
+            bool? result = timeSet.ShowDialog();
             if (result == true)
             {
+                if (valves[Vnum].Times.Count > 0)
+                {
+                    valves[Vnum].Times.Clear();
+                }
                 for (int i = 0; i <= timeSet.TBsCount; i++)
                 {
-                    lists[Vnum].Add(new Time
+                    valves[Vnum].Times.Add(new Time
                     {
                         Time_Opens = Int32.Parse(timeSet.TBsOpen[i].Text),
                         Time_Closes = Int32.Parse(timeSet.TBsClose[i].Text),
                         Amount = Int32.Parse(timeSet.TBsAmount[i].Text)
                     });
                 }
+                ValvesTimeToolTip(Vnum);
+                PaintTo("white", Vnum);
+
             }
-            timeSet.Close();
-            valves[Vnum].Times = lists[Vnum];
-            v[Vnum].Fill = red;
+            else
+            {
+                PaintTo("gray", Vnum);
+            }
+
+            timeSet.Hide();
+        }
+
+        void TimeSetup(List<int> Vnum)
+        {
+            TimeSet timeSet = new TimeSet
+            {
+                Owner = this,
+                Title = $"Задание времени"
+            };
+            bool? result = timeSet.ShowDialog();
+            if (result == true)
+            {
+                for (int j = 0; j <= Vnum.Count - 1; j++)
+                {
+                    for (int i = 0; i <= timeSet.TBsCount; i++)
+                    {
+                        valves[Vnum[j]].Times.Add(new Time
+                        {
+                            Time_Opens = Int32.Parse(timeSet.TBsOpen[i].Text),
+                            Time_Closes = Int32.Parse(timeSet.TBsClose[i].Text),
+                            Amount = Int32.Parse(timeSet.TBsAmount[i].Text)
+                        });
+                    }
+                    ValvesTimeToolTip(Vnum[j]);
+                    PaintTo("white", Vnum[j]);
+                }
+            }
+            else
+            {
+                for (int k = 0; k <= Vnum.Count - 1; k++)
+                {
+                    PaintTo("gray", Vnum[k]);
+                }
+            }
+            timeSet.Hide();
 
         }
+
+        private void SetTimeForAll_Click(object sender, RoutedEventArgs e)
+        {
+            TimeSet timeSet = new TimeSet
+            {
+                Owner = this,
+                Title = $"Для всех клапанов"
+            };
+            bool? result = timeSet.ShowDialog();
+            if (result == true)
+            {
+                for (int i = 0; i <= 125; i++)
+                {
+
+                    for (int j = 0; j <= timeSet.TBsCount; j++)
+                    {
+                        valves[i].Times.Add(new Time
+                        {
+                            Time_Opens = Int32.Parse(timeSet.TBsOpen[j].Text),
+                            Time_Closes = Int32.Parse(timeSet.TBsClose[j].Text),
+                            Amount = Int32.Parse(timeSet.TBsAmount[j].Text)
+                        });
+                    }
+                    ValvesTimeToolTip(i);
+                }
+            }
+            timeSet.Hide();
+        }
+
+        private void SetWithStep_Click(object sender, RoutedEventArgs e)
+        {
+            List<int> vls = new List<int>();
+            int steps = 0;
+            StepSetup stepSetup = new StepSetup();
+            bool? result = stepSetup.ShowDialog();
+            if (result == true)
+            {
+                steps = Int32.Parse(stepSetup.StepTB.Text);
+                for (int i = 0; i <= 125; i++)
+                {
+                    if (i % (steps + 1) == 0)
+                    {
+                        vls.Add(new int { });
+                        vls[vls.Count - 1] = i;
+                        PaintTo("yellow", vls[vls.Count - 1]);
+                    }
+                }
+                TimeSetup(vls);
+            }
+        }
+
     }
 }

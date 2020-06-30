@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Windows;
+using System.Text.RegularExpressions;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -14,6 +15,7 @@ using System.Windows.Shapes;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Windows.Threading;
+using System.Linq;
 
 namespace ddddd
 {
@@ -27,8 +29,9 @@ namespace ddddd
             InitializeComponent();
             DeclareValves();
             ImplementValves();
-            //ValvesToolTip();
+            ValvesModuleToolTip();
             Count_Setup();
+            ValvesRightClick();
             InitializeTimer();
         }
 
@@ -47,11 +50,18 @@ namespace ddddd
                 amount_count[i] = 0;
                 j_count[i] = 0;
             }
+            HoursTB.PreviewTextInput += PreviewText;
+            MinutesTB.PreviewTextInput += PreviewText;
+            SecondsTB.PreviewTextInput += PreviewText;
+            HoursTB.TextChanged += HoursTextBox_TextChanged;
+            MinutesTB.TextChanged += TextBox_TextChanged;
+            SecondsTB.TextChanged += TextBox_TextChanged;
         }
         void InitializeTimer()
         {
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += Timer_Tick;
+            timer.IsEnabled = false;
         }
 
         void Timer_Tick(object sender, EventArgs e)
@@ -79,6 +89,7 @@ namespace ddddd
                     else
                     {
                         timer.Stop();
+                        timer.IsEnabled = false;
                         for (int i = 0; i <= 125; i++)
                         {
                             ValveClosing(i);
@@ -91,28 +102,122 @@ namespace ddddd
             }
             for (int i = 0; i <= 125; i++)
             {
-                time_count[i]++;
-                if (valves[i].IsOpened == false)
+
+                if (valves[i].Times.Count != j_count[i])
                 {
-                    if (time_count[i] == valves[i].Times[j_count[i]].Time_Closes)
+                    time_count[i]++;
+                    if (valves[i].Times[j_count[i]].Amount == 0)
                     {
-                        ValveOpening(i);
-                        time_count[i] = 0;
-                        amount_count[i]++;
-                        if (amount_count[i] == valves[i].Times[j_count[i]].Amount)
+                        if (valves[i].IsOpened == false)
                         {
-                            j_count[i]++;
+                            if (time_count[i] == valves[i].Times[j_count[i]].Time_Closes)
+                            {
+                                ValveOpening(i);
+                                time_count[i] = 0;
+                                LogTB.Text += $"{DateTime.Now.ToString("HH:mm:ss")}: {i} клапан был открыт\n";
+                            }
+                        }
+                        else
+                        {
+                            if (time_count[i] == valves[i].Times[j_count[i]].Time_Opens)
+                            {
+                                ValveClosing(i);
+                                time_count[i] = 0;
+                                LogTB.Text += $"{DateTime.Now.ToString("HH:mm:ss")}: {i} клапан был закрыт\n";
+                            }
                         }
                     }
+                    else
+                    {
+                        if (valves[i].IsOpened == false)
+                        {
+                            if (time_count[i] == valves[i].Times[j_count[i]].Time_Closes)
+                            {
+                                ValveOpening(i);
+                                time_count[i] = 0;
+                                LogTB.Text += $"{DateTime.Now.ToString("HH:mm:ss")}: {i} клапан был закрыт\n";
+                            }
+                        }
+                        else
+                        {
+                            if (time_count[i] == valves[i].Times[j_count[i]].Time_Opens)
+                            {
+                                ValveClosing(i);
+                                time_count[i] = 0;
+                                amount_count[i]++;
+                                LogTB.Text += $"{DateTime.Now.ToString("HH:mm:ss")}: {i} клапан был открыт\n";
+                                if (amount_count[i] == valves[i].Times[j_count[i]].Amount)
+                                {
+                                    j_count[i]++;
+                                }
+                            }
+                        }
+                    }
+
+                    
+
+                }
+
+            }
+        }
+
+        private static readonly Regex _regex = new Regex("[^0-9]+");
+        private static bool TBsValidation(string text)
+        {
+            return !_regex.IsMatch(text);
+        }
+
+        private void PreviewText(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !TBsValidation(e.Text);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox TB = e.Source as TextBox;
+            SolidColorBrush red = new SolidColorBrush
+            {
+                Color = Color.FromRgb(164, 63, 63)
+            };
+            if (TB.Text != "")
+            {
+                if (Int32.Parse(TB.Text) <= 60)
+                {
+                    TB.BorderBrush = null;
                 }
                 else
                 {
-                    if (time_count[i] == valves[i].Times[j_count[i]].Time_Opens)
-                    {
-                        ValveClosing(i);
-                        time_count[i] = 0;
-                    }
+                    TB.BorderBrush = red;
                 }
+            }
+            else
+            {
+                TB.BorderBrush = red;
+            }
+        }
+
+        private void HoursTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox TB = e.Source as TextBox;
+            SolidColorBrush red = new SolidColorBrush
+            {
+                Color = Color.FromRgb(164, 63, 63)
+            };
+            if (TB.Text != "")
+            {
+                TB.BorderBrush = null;
+            }
+            else
+            {
+                TB.BorderBrush = red;
+            }
+        }
+
+        private void ValvesRightClick()
+        {
+            for (int i = 0; i <= 125; i++)
+            {
+                v[i].MouseLeftButtonDown += Valve_MouseLeftButtonDown;
             }
         }
 
@@ -127,15 +232,41 @@ namespace ddddd
             }
         }
 
-        /*public void ValvesToolTip()
+        public void ValvesModuleToolTip()
         {
             for (int i = 0; i <= 125; i++)
             {
-                v[i].ToolTip = $"Время открытия:{valves[i].Time_open}\n" +
-                    $"Время закрытия:{valves[i].Time_close}\n" +
-                    $"LTR модуль:{valves[i].Index}_{valves[i].Ltrch}";
+                v[i].ToolTip = $"LTR модуль:{valves[i].Index}_{valves[i].Ltrch}\n";
+
             }
-        }*/
+        }
+
+        public void ValvesTimeToolTip(int num)
+        {
+            v[num].ToolTip = "";
+            v[num].ToolTip = $"LTR модуль:{valves[num].Index}_{valves[num].Ltrch}\n";
+            if (valves[num].Times.Count > 1)
+            {
+                for (int i = 0; i <= valves[num].Times.Count - 1; i++)
+                {
+                    v[num].ToolTip += $"------------#{(i+1)}\nВ.О.:{valves[num].Times[i].Time_Opens}сек\n" +
+                        $"В.З.:{valves[num].Times[i].Time_Closes}сек\nК.П.:{valves[num].Times[i].Amount}раз\n";
+                }
+            }
+            else
+            {
+                if (valves[num].Times.Count == 1)
+                {
+                    v[num].ToolTip += $"В.О.:{valves[num].Times[0].Time_Opens}сек\n" +
+                        $"В.З.:{valves[num].Times[0].Time_Closes}сек\nК.П.:{valves[num].Times[0].Amount}раз\n";
+                }
+                /*if (valves[num].Times.Count == 0)
+                {
+                    v[num].ToolTip += $"В.О.:\nВ.З.:\nК.П.:\n";
+                }
+                */
+            }
+        }
 
         private void ImplementValves()
         {
@@ -270,20 +401,49 @@ namespace ddddd
 
         void Disable()
         {
-            LoadConfiguration.IsEnabled = false;
-            HoursTB.IsEnabled = false;
-            MinutesTB.IsEnabled = false;
-            SecondsTB.IsEnabled = false;
-            CloseAll.IsEnabled = false;
+            foreach (Button btn in canv.Children.OfType<Button>())
+            {
+                btn.IsEnabled = false;
+            }
+            StopButton.IsEnabled = true;
         }
 
         void Enable()
         {
-            LoadConfiguration.IsEnabled = true;
-            HoursTB.IsEnabled = true;
-            MinutesTB.IsEnabled = true;
-            SecondsTB.IsEnabled = true;
-            CloseAll.IsEnabled = true;
+            foreach (Button btn in canv.Children.OfType<Button>())
+            {
+                btn.IsEnabled = true;
+            }
+        }
+
+        void PaintToGray(int num)
+        {
+            SolidColorBrush mySolidColorBrush = new SolidColorBrush
+            {
+                Color = Color.FromRgb(75, 75, 75)
+            };
+            v[num].Fill = mySolidColorBrush;
+        }
+
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i <= 125; i++)
+            {
+                if (valves[i].Times.Count == 0)
+                {
+                    PaintToGray(i);
+                }
+                else
+                {
+                    ValveOpening(i);
+                }
+            }
+            LogTB.Text += "";
+            timer.IsEnabled = true;
+            timer.Start();
+            Disable();
+            LogTB.Text += $"Программа начала работу со временем {int.Parse(HoursTB.Text)}:{int.Parse(MinutesTB.Text)}:{int.Parse(SecondsTB.Text)} \n";
+
         }
 
         private void LoadConfiguration_Click(object sender, RoutedEventArgs e)
@@ -303,40 +463,10 @@ namespace ddddd
                 FileStream FS = new FileStream(fs.FileName, FileMode.OpenOrCreate);
                 valves = (List<Valve>)formatter.Deserialize(FS);
             }
-            //ValvesToolTip();
-        }
-
-        private void Valve_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            int Vnum = 0;
             for (int i = 0; i <= 125; i++)
             {
-                if ((e.GetPosition(canv).X >= Canvas.GetLeft(v[i])) && (e.GetPosition(canv).X <= Canvas.GetLeft(v[i]) + 20))
-                {
-                    if ((e.GetPosition(canv).Y >= Canvas.GetTop(v[i])) && (e.GetPosition(canv).Y <= Canvas.GetTop(v[i]) + 20))
-                    {
-                        Vnum = i;
-                        break;
-                    }
-                }
+                ValvesTimeToolTip(i);
             }
-            TimeSet timeSet = new TimeSet
-            {
-                Owner = this,
-                Title = $"Клапан #{ Vnum + 1 }"
-            };
-            Nullable<bool> result = timeSet.ShowDialog();
-            if (result == true)
-            {
-                //valves[Vnum].Time_open[1] = Int32.Parse(timeSet.opentimeTextBox.Text);
-                //valves[Vnum].Time_close[1] = Int32.Parse(timeSet.closetimeTextBox.Text);
-
-            }
-            timeSet.Close();
-            //l1.Content = valves[Vnum].Time_open;
-            //v[Vnum].ToolTip = $"Время открытия:{valves[Vnum].Time_open}\n" +
-            //    $"Время закрытия:{valves[Vnum].Time_close}\n" +
-            //    $"LTR модуль:{valves[Vnum].Index}_{valves[Vnum].Ltrch}";
         }
 
         void ValveOpening(int i)
@@ -359,14 +489,6 @@ namespace ddddd
             valves[i].IsOpened = false;
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
-        {
-            //timer.Start();
-            //Disable();
-            LogTB.Text += $"Программа начала работу со временем {int.Parse(HoursTB.Text)}:{int.Parse(MinutesTB.Text)}:{int.Parse(SecondsTB.Text)} \n";
-
-        }
-
         private void CloseAll_Click(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i <= 125; i++)
@@ -385,14 +507,9 @@ namespace ddddd
             LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыты все клапаны \n");
         }
 
-        private void winAutoMode_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-
-        }
-
         private void Open_Right_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i <= 125; i++)
+            for (int i = 0; i <= 125; i++)
             {
                 if (Canvas.GetLeft(v[i]) >= 615)
                 {
@@ -403,7 +520,7 @@ namespace ddddd
                     ValveClosing(i);
                 }
             }
-            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыта правая половина \n");
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Была открыта правая половина \n");
         }
 
         private void Open_Left_Click(object sender, RoutedEventArgs e)
@@ -419,7 +536,7 @@ namespace ddddd
                     ValveClosing(i);
                 }
             }
-            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыта правая половина \n");
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Была открыта правая половина \n");
         }
 
         private void Open_with_step_Click(object sender, RoutedEventArgs e)
@@ -431,11 +548,19 @@ namespace ddddd
             {
                 steps = Int32.Parse(stepSetup.StepTB.Text);
                 LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыты клапаны: ");
-                for (int i = 0; i <= 125; i += steps)
+                for (int i = 0; i <= 125; i++)
                 {
-                    ValveOpening(i);
-                    LogTB.Text += ($"");
+                    if (i % (steps + 1) == 0)
+                    {
+                        ValveOpening(i);
+                        LogTB.Text += ($"{i + 1}, ");
+                    }
+                    else
+                    {
+                        ValveClosing(i);
+                    }
                 }
+                LogTB.Text += ($" Остальные закрыты\n");
             }
         }
 
@@ -451,8 +576,153 @@ namespace ddddd
             };
             Nullable<bool> result = fs.ShowDialog();
             if (result == true)
-            {               
-                File.WriteAllText(fs.FileName,LogTB.Text);
+            {
+                File.WriteAllText(fs.FileName, LogTB.Text);
+            }
+        }
+
+        private void OpenTop_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i <= 125; i++)
+            {
+                if (Canvas.GetTop(v[i]) <= 390)
+                {
+                    ValveOpening(i);
+                }
+                else
+                {
+                    ValveClosing(i);
+                }
+            }
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Была открыта верхняя половина \n");
+        }
+
+        private void OpenButtom_Click(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i <= 125; i++)
+            {
+                if (Canvas.GetTop(v[i]) >= 370)
+                {
+                    ValveOpening(i);
+                }
+                else
+                {
+                    ValveClosing(i);
+                }
+            }
+            LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Была открыта нижняя половина \n");
+        }
+
+        private void winAutoMode_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (timer.IsEnabled == true)
+            {
+                MessageBox.Show("Закрытие программы во время работы");
+
+                // If data is dirty, notify user and ask for a response
+                if (timer.IsEnabled == true)
+                {
+                    string msg = "Программа все ещё выполняется. Вы уверены, что хотите выйти?";
+                    MessageBoxResult result =
+                      MessageBox.Show(
+                        msg,
+                        "Осторожно!",
+                        MessageBoxButton.YesNo,
+                        MessageBoxImage.Warning);
+                    if (result == MessageBoxResult.No)
+                    {
+                        // If user doesn't want to close, cancel closure
+                        e.Cancel = true;
+                    }
+                }
+            }
+        }
+
+        private void StopButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (timer.IsEnabled == true)
+            {
+                MessageBox.Show("Закрытие программы во время работы");
+
+                timer.Stop();
+                timer.IsEnabled = false;
+                for (int i = 0; i <= 125; i++)
+                {
+                    ValveClosing(i);
+                }
+                Enable();
+            }
+        }
+
+        private void CreateConfiguration_Click(object sender, RoutedEventArgs e)
+        {
+            CreateConfig config = new CreateConfig();
+            config.Show();
+        }
+
+        private void Valve_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            int Vnum = 0;
+            for (int i = 0; i <= 125; i++)
+            {
+                if ((e.GetPosition(canv).X >= Canvas.GetLeft(v[i])) && (e.GetPosition(canv).X <= Canvas.GetLeft(v[i]) + 20))
+                {
+                    if ((e.GetPosition(canv).Y >= Canvas.GetTop(v[i])) && (e.GetPosition(canv).Y <= Canvas.GetTop(v[i]) + 20))
+                    {
+                        Vnum = i;
+                        break;
+                    }
+                }
+            }
+            if (valves[Vnum].IsOpened == true)
+            {
+                ValveClosing(Vnum);
+            }
+            else
+            {
+                ValveOpening(Vnum);
+            }
+        }
+
+        bool ClickCheck = false;
+        private void Liner_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ClickCheck == false)
+            {
+                LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были закрыты клапаны: ");
+                for (int i = 0; i <= 125; i++)
+                {
+                    if ((e.GetPosition(canv).Y >= Canvas.GetTop(v[i])) && (e.GetPosition(canv).Y <= Canvas.GetTop(v[i]) + 20))
+                    {
+                        if (valves[i].IsOpened == true)
+                        {
+                            ValveClosing(i);
+                            LogTB.Text += ($"{i + 1}, ");
+                        }
+                    }
+                }
+                LogTB.Text += ($"\n ");
+                ClickCheck = true;
+            }
+        }
+        private void Liner_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ClickCheck == true)
+            {
+                LogTB.Text += ($"{DateTime.Now.ToString("HH:mm:ss")} Были открыты клапаны: ");
+                for (int i = 0; i <= 125; i++)
+                {
+                    if ((e.GetPosition(canv).Y >= Canvas.GetTop(v[i])) && (e.GetPosition(canv).Y <= Canvas.GetTop(v[i]) + 20))
+                    {
+                        if (valves[i].IsOpened == true)
+                        {
+                            ValveClosing(i);
+                            LogTB.Text += ($"{i + 1}, ");
+                        }
+                    }
+                }
+                LogTB.Text += ($"\n ");
+                ClickCheck = false;
             }
         }
     }

@@ -17,9 +17,9 @@
         <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="380" Width="625"/>
         <Rectangle Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="610" Width="485" RadiusX="0" RadiusY="0"/>
         <Rectangle x:Name="bottom" Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="695" Width="205" RadiusX="0" RadiusY="0"/>
-        <Ellipse x:Name="v_0" Height="20" Canvas.Left="510" Canvas.Top="65" Width="20" Fill="LightGray" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
-        <Ellipse x:Name="v_1" Height="20" Canvas.Left="545" Canvas.Top="65" Width="20" Fill="#FF4B4B4B" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
-        <Ellipse x:Name="v_2" Height="20" Canvas.Left="580" Canvas.Top="65" Width="20" Fill="#FF4B4B4B" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
+        <Ellipse x:Name="v_0" Height="20" Canvas.Left="510" Canvas.Top="65" Width="20" Fill="#FF4B4B4B"/>
+        <Ellipse x:Name="v_1" Height="20" Canvas.Left="545" Canvas.Top="65" Width="20" Fill="#FF4B4B4B"/>
+        <Ellipse x:Name="v_2" Height="20" Canvas.Left="580" Canvas.Top="65" Width="20" Fill="#FF4B4B4B"/>
         <Ellipse x:Name="v_3" Height="20" Canvas.Left="615" Canvas.Top="65" Width="20" Fill="#FF4B4B4B"/>
         <Ellipse x:Name="v_4" Height="20" Canvas.Left="650" Canvas.Top="65" Width="20" Fill="#FF4B4B4B"/>
         <Ellipse x:Name="v_5" Height="20" Canvas.Left="685" Canvas.Top="65" Width="20" Fill="#FF4B4B4B"/>
@@ -148,5 +148,7 @@
         <Ellipse x:Name="v_124" Height="20" Canvas.Left="650" Canvas.Top="695" Width="20" Fill="#FF4B4B4B"/>
         <Ellipse x:Name="v_125" Height="20" Canvas.Left="685" Canvas.Top="695" Width="20" Fill="#FF4B4B4B"/>
         <Ellipse Height="0" Canvas.Left="1133" Stroke="Black" Canvas.Top="405" Width="9"/>
+        <Button x:Name="SetTimeForAll" Content="Задать для всех" Height="50" Canvas.Left="25" Canvas.Top="230" Width="160" Click="SetTimeForAll_Click"/>
+        <Button x:Name="SetWithStep" Content="Задать с шагом" Height="50" Canvas.Left="25" Canvas.Top="300" Width="160" Click="SetWithStep_Click" IsCancel="True"/>
     </Canvas>
 </Window>

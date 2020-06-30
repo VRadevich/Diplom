@@ -5,27 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ddddd"
         mc:Ignorable="d"
-        Title="Автоматический режим" Height="800" Width="1000" Background="#FF809988" ResizeMode="NoResize" Closing="winAutoMode_Closing">
+        Title="Окно управления клапанами" Height="800" Width="1000" Background="#FF809988" ResizeMode="NoResize" Closing="winAutoMode_Closing">
     <Canvas x:Name="canv" HorizontalAlignment="Stretch" Height="784" VerticalAlignment="Stretch" Width="1000" RenderTransformOrigin="0.5,0.5">
         <Ellipse Height="700" Canvas.Left="260" Stroke="Black" Canvas.Top="40" Width="700" Fill="#FF4E85A4"/>
-        <Rectangle Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="65" Width="205" RadiusX="0" RadiusY="0"/>
-        <Rectangle Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="530" Width="555" RadiusX="0" RadiusY="0"/>
-        <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="455" Width="625" RadiusX="0" RadiusY="0"/>
-        <Rectangle Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="150" Width="485"/>
-        <Rectangle Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="230" Width="555"/>
-        <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="305" Width="625"/>
-        <Rectangle Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="380" Width="625"/>
-        <Rectangle Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="610" Width="485" RadiusX="0" RadiusY="0"/>
-        <Rectangle x:Name="bottom" Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="695" Width="205" RadiusX="0" RadiusY="0"/>
-        <Ellipse x:Name="v_0" Height="20" Canvas.Left="510" Canvas.Top="65" Width="20" Fill="#FFA43F3F" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
-        <Ellipse x:Name="v_1" Height="20" Canvas.Left="545" Canvas.Top="65" Width="20" Fill="#FFA43F3F" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
-        <Ellipse x:Name="v_2" Height="20" Canvas.Left="580" Canvas.Top="65" Width="20" Fill="#FFA43F3F" MouseRightButtonDown="Valve_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner1" Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="65" Width="205" RadiusX="0" RadiusY="0" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner7" Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="530" Width="555" RadiusX="0" RadiusY="0" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner6" Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="455" Width="625" RadiusX="0" RadiusY="0" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner2" Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="150" Width="485" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner3" Height="21" Canvas.Left="330" Stroke="Black" Canvas.Top="230" Width="555" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner4" Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="305" Width="625" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner5" Height="21" Canvas.Left="295" Stroke="Black" Canvas.Top="380" Width="625" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner8" Height="21" Canvas.Left="365" Stroke="Black" Canvas.Top="610" Width="485" RadiusX="0" RadiusY="0" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Rectangle x:Name="Liner9" Height="21" Canvas.Left="505" Stroke="Black" Canvas.Top="695" Width="205" RadiusX="0" RadiusY="0" MouseLeftButtonDown="Liner_MouseLeftButtonDown" MouseRightButtonDown="Liner_MouseRightButtonDown"/>
+        <Ellipse x:Name="v_0" Height="20" Canvas.Left="510" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_1" Height="20" Canvas.Left="545" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
+        <Ellipse x:Name="v_2" Height="20" Canvas.Left="580" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_3" Height="20" Canvas.Left="615" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_4" Height="20" Canvas.Left="650" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_5" Height="20" Canvas.Left="685" Canvas.Top="65" Width="20" Fill="#FFA43F3F"/>
-        <Button x:Name="LoadConfiguration" Content="Загрузить конфигурацию" Height="25" Canvas.Left="25" Canvas.Top="25" Width="160" Click="LoadConfiguration_Click"/>
+        <Button x:Name="LoadConfiguration" Content="Загрузить конфигурацию" Height="25" Canvas.Left="25" Canvas.Top="25" Width="142" Click="LoadConfiguration_Click"/>
         <Button x:Name="OpenAll" Content="Открыть все клапаны" Height="25" Canvas.Left="25" Canvas.Top="120" Width="125" Click="OpenAll_Click"/>
-        <Button x:Name="Start" Content="Запуск" Height="25" Canvas.Left="200" Canvas.Top="25" Width="53" Click="Start_Click"/>
+        <Button x:Name="Start" Content="Запуск" Height="23" Canvas.Left="190" Canvas.Top="60" Width="54" Click="Start_Click"/>
         <Ellipse x:Name="v_6" Height="20" Canvas.Left="370" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_8" Height="20" Canvas.Left="440" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
         <Ellipse x:Name="v_9" Height="20" Canvas.Left="475" Canvas.Top="150" Width="20" Fill="#FFA43F3F"/>
@@ -151,9 +151,15 @@
         <TextBox x:Name="MinutesTB" Height="50" Canvas.Left="80" Canvas.Top="60" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Минуты работы"/>
         <TextBox x:Name="SecondsTB" Height="50" Canvas.Left="135" Canvas.Top="60" Text="0" TextWrapping="Wrap" Width="50" AcceptsTab="True" MaxLength="2" MaxLines="1" FontSize="36" ToolTip="Секунды работы"/>
         <TextBox x:Name="LogTB" Height="253" Canvas.Left="22" Canvas.Top="508" TextWrapping="Wrap" Width="219" FontSize="9" ScrollViewer.CanContentScroll="True" VerticalScrollBarVisibility="Auto"/>
-        <Button x:Name="Open_with_step" Content="Открыть с шагом" Height="25" Canvas.Left="160" Canvas.Top="120" Width="98" Click="Open_with_step_Click"/>
-        <Button x:Name="Open_Right" Content="Открыть правую половину" Height="25" Canvas.Left="25" Canvas.Top="190" Width="151" Click="Open_Right_Click"/>
-        <Button x:Name="Open_Left" Content="Открыть левую половину" Height="25" Canvas.Left="25" Canvas.Top="225" Width="150" Click="Open_Left_Click"/>
+        <Button x:Name="Open_with_step" Content="Открыть с шагом" Height="25" Canvas.Left="26" Canvas.Top="188" Width="98" Click="Open_with_step_Click"/>
+        <Button x:Name="Open_Right" Content="Правую" Height="25" Canvas.Left="77" Canvas.Top="307" Width="48" Click="Open_Right_Click"/>
+        <Button x:Name="Open_Left" Content="Левую" Height="25" Canvas.Left="30" Canvas.Top="307" Width="45" Click="Open_Left_Click"/>
         <Button x:Name="SaveLog" Content="Сохранить лог" Height="25" Canvas.Left="25" Canvas.Top="466" Width="96" Click="SaveLog_Click"/>
+        <Rectangle Height="91" Canvas.Left="25" Stroke="Black" Canvas.Top="274" Width="104" StrokeThickness="2"/>
+        <Button x:Name="OpenTop" Content="Верхнюю" Height="25" Canvas.Left="30" Canvas.Top="278" Width="95" Click="OpenTop_Click"/>
+        <Button x:Name="OpenButtom" Content="Нижнюю" Height="25" Canvas.Left="30" Canvas.Top="335" Width="95" Click="OpenButtom_Click"/>
+        <Label Content="Открыть половину:" Height="25" Canvas.Left="22" Canvas.Top="247" Width="110"/>
+        <Button x:Name="StopButton" Content="Стоп" Height="23" Canvas.Left="190" Canvas.Top="86" Width="54" Click="StopButton_Click"/>
+        <Button x:Name="CreateConfiguration" Content="Создать конфигурацию" Height="25" Canvas.Left="173" Canvas.Top="25" Width="133" Click="CreateConfiguration_Click"/>
     </Canvas>
 </Window>

@@ -14,7 +14,7 @@
         <Button Name="okButton" Canvas.Left="272" Canvas.Top="175" Height="29" Width="31" Click="OkButton_Click">OK</Button>
         <ScrollViewer Height="156">
             <Canvas x:Name="timeSetCanvas" Height="118" Canvas.Top="6" Width="242" Canvas.Left="5">
-                <Button x:Name="Add" Content="Добавить" Height="31" Canvas.Left="80" Canvas.Top="90" Width="58" Click="Add_Click" RenderTransformOrigin="0.5,0.5"/>
+                <Button x:Name="AddButton" Content="Добавить" Height="31" Canvas.Left="80" Canvas.Top="90" Width="58" Click="AddButton_Click" RenderTransformOrigin="0.5,0.5"/>
             </Canvas>
         </ScrollViewer>
     </Canvas>

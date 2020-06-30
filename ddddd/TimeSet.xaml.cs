@@ -30,10 +30,11 @@ namespace ddddd
         public List<Label> lOpen = new List<Label>();
         public List<Label> lClose = new List<Label>();
         public List<Label> lAmount = new List<Label>();
+        public List<Line> lines = new List<Line>();
 
-        public TimeSet(int qwe)
+        public TimeSet(List<Time> times)
         {
-            for (int i = 0; i>123; i++)
+            for (int i = 0; i> times.Count; i++)
             {
 
             }
@@ -68,18 +69,25 @@ namespace ddddd
         public int PositioningY2 = 35;
         public int PositioningY3 = 60;
         public int PositioningY4 = 90;
+        public int PositioningY5 = 4;
         public int TBsCount = 0;
 
         void TBsCreation()
         {
+            lines.Add(new Line { X1 = 1, X2 = 230, Y1 = PositioningY5, Y2 = PositioningY5, Stroke = Brushes.Black, StrokeThickness = 2 });
+            timeSetCanvas.Children.Add(lines[TBsCount]);
+            Canvas.SetLeft(lines[TBsCount], 2);
+            //
+            //
+            //
             TBsOpen.Add(new TextBox { MaxLength = 5, Width = 45 });
             timeSetCanvas.Children.Add(TBsOpen[TBsCount]);
             Canvas.SetTop(TBsOpen[TBsCount], PositioningY1);
-            Canvas.SetLeft(TBsOpen[TBsCount], 150);
+            Canvas.SetLeft(TBsOpen[TBsCount], 175);
             TBsOpen[TBsCount].PreviewTextInput += PreviewText;
             TBsOpen[TBsCount].TextChanged += TextBox_TextChanged;
 
-            lOpen.Add(new Label { Content = "Длительность открытия, сек", Width = 130 });
+            lOpen.Add(new Label { Content = "Продолжит. открытия, сек", Width = 170 });
             timeSetCanvas.Children.Add(lOpen[TBsCount]);
             Canvas.SetTop(lOpen[TBsCount], PositioningY1);
             Canvas.SetLeft(lOpen[TBsCount], 10);
@@ -89,11 +97,11 @@ namespace ddddd
             TBsClose.Add(new TextBox { MaxLength = 5, Width = 45 });
             timeSetCanvas.Children.Add(TBsClose[TBsCount]);
             Canvas.SetTop(TBsClose[TBsCount], PositioningY2);
-            Canvas.SetLeft(TBsClose[TBsCount], 150);
+            Canvas.SetLeft(TBsClose[TBsCount], 175);
             TBsClose[TBsCount].PreviewTextInput += PreviewText;
             TBsClose[TBsCount].TextChanged += TextBox_TextChanged;
 
-            lClose.Add(new Label { Content = "Длительность закрытия, сек", Width = 130 });
+            lClose.Add(new Label { Content = "Продолжит. закрытия, сек", Width = 170 });
             timeSetCanvas.Children.Add(lClose[TBsCount]);
             Canvas.SetTop(lClose[TBsCount], PositioningY2);
             Canvas.SetLeft(lClose[TBsCount], 10);
@@ -103,11 +111,11 @@ namespace ddddd
             TBsAmount.Add(new TextBox { MaxLength = 3, Width = 45, Text = "0" });
             timeSetCanvas.Children.Add(TBsAmount[TBsCount]);
             Canvas.SetTop(TBsAmount[TBsCount], PositioningY3);
-            Canvas.SetLeft(TBsAmount[TBsCount], 150);
+            Canvas.SetLeft(TBsAmount[TBsCount], 175);
             TBsAmount[TBsCount].PreviewTextInput += PreviewText;
             TBsAmount[TBsCount].TextChanged += TextBox_TextChanged;
 
-            lAmount.Add(new Label { Content = "Количество повторений", Width = 130 });
+            lAmount.Add(new Label { Content = "Количество повторений", Width = 170 });
             timeSetCanvas.Children.Add(lAmount[TBsCount]);
             Canvas.SetTop(lAmount[TBsCount], PositioningY3);
             Canvas.SetLeft(lAmount[TBsCount], 10);
@@ -115,17 +123,18 @@ namespace ddddd
             PositioningY1 += 80;
             PositioningY2 += 80;
             PositioningY3 += 80;
+            PositioningY5 += 80;
 
         }
 
-        private void Add_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             SolidColorBrush red = new SolidColorBrush
             {
                 Color = Color.FromRgb(164, 63, 63)
             };
 
-            if (TBsAmount[TBsCount].Text != "")
+            if ((TBsAmount[TBsCount].Text != "")|| (TBsAmount[TBsCount].Text != "0"))
             {
                 if (TBsOpen[TBsCount].Text != "")
                 {
@@ -135,7 +144,7 @@ namespace ddddd
                         timeSetCanvas.Height += 80;
                         TBsCreation();
                         PositioningY4 += 80;
-                        Canvas.SetTop(Add, PositioningY4);
+                        Canvas.SetTop(AddButton, PositioningY4);
                     }
                     else
                     {

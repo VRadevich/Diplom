@@ -19,7 +19,10 @@ namespace ddddd
         public bool IsOpened { get; set; }
 
         public Valve()
-        { }
+        {
+            IsOpened = true;
+            Times = new List<Time>();
+        }
     }
 
     [Serializable]
